@@ -1,7 +1,5 @@
 import json
 from datetime import datetime
-from prettytable import PrettyTable
-
 
 def searchT(src: str, dest: str):
     train_data = [["S.No.", "Arrival Time", "Departure Time", "Train Number", "Train Name"]]
