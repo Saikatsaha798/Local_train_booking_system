@@ -1,5 +1,4 @@
 from getpass import getpass
-from prettytable import PrettyTable
 import os
 import pickle
 from cryptography.fernet import Fernet
