@@ -1,5 +1,4 @@
 import json
-from prettytable import PrettyTable
 
 def searchS(text):
     station = [["Station Code", "Station Name"]]
