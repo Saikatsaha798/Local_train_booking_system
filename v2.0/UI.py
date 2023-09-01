@@ -84,7 +84,7 @@ def login_page(): #creating cutstom tkinter window
     entry1=ctk.CTkEntry(master=frame, width=220, placeholder_text='Username')
     entry1.place(x=50, y=110)
 
-    entry2=ctk.CTkEntry(master=frame, width=220, placeholder_text='Password', show="*")
+    entry2=ctk.CTkEntry(master=frame, width=220, placeholder_text='Password', show="●")
     entry2.place(x=50, y=155)
 
     l3=ctk.CTkLabel(master=frame, text="New user ?",font=('Century Gothic',14))
@@ -122,10 +122,10 @@ def signup_page():
     entry1=ctk.CTkEntry(master=frame, width=220, placeholder_text='Username')
     entry1.place(x=50, y=110)
 
-    entry2=ctk.CTkEntry(master=frame, width=220, placeholder_text='Password', show="*")
+    entry2=ctk.CTkEntry(master=frame, width=220, placeholder_text='Password', show="●")
     entry2.place(x=50, y=155)
 
-    entry3=ctk.CTkEntry(master=frame, width=220, placeholder_text='Confirm Password', show="*")
+    entry3=ctk.CTkEntry(master=frame, width=220, placeholder_text='Confirm Password', show="●")
     entry3.place(x=50, y=200)
 
     l3=ctk.CTkLabel(master=frame, text="Already registered ?",font=('Century Gothic',14))
