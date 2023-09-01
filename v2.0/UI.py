@@ -16,6 +16,10 @@ ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 app = ctk.CTk() 
 
+def close_wm():
+    app.quit()
+    app.destroy()
+
 def login_button_function(entry1, entry2):
     if "data" not in os.listdir():
         os.mkdir("data")
@@ -30,7 +34,8 @@ def login_button_function(entry1, entry2):
         main_page()
     
     else:
-        CTkMessagebox(title="Login Error", message="Wrong username and password !", master = app, justify = "center", icon="cancel")
+        msg1 = CTkMessagebox(title="Login Error", message="Wrong username and password !", master = app, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def signup_button_function(app_sign, entry1, entry2, entry3):
     if "data" not in os.listdir():
@@ -41,17 +46,21 @@ def signup_button_function(app_sign, entry1, entry2, entry3):
     conpas = entry3.get()
 
     if (pas == "" or usr == ""):
-        CTkMessagebox(title="Signup Error", message="Username and password can't be empty !", master = app_sign, justify = "center", icon="cancel")
+        msg1 = CTkMessagebox(title="Signup Error", message="Username and password can't be empty !", master = app_sign, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
     else:
         if (pas == conpas):
             registered = login.signup(usr, pas)
             if (registered):
-                CTkMessagebox(title="Signed In", message="Signed up successfully !", master = app_sign, justify = "center",
+                msg1 = CTkMessagebox(title="Signed In", message="Signed up successfully !", master = app_sign, justify = "center",
                     icon="check")
+                msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
             else:
-                CTkMessagebox(title="Signup Error", message="Username not available !", master = app_sign, justify = "center", icon="cancel")
+                msg1 = CTkMessagebox(title="Signup Error", message="Username not available !", master = app_sign, justify = "center", icon="cancel")
+                msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
         else:
-            CTkMessagebox(title="Signup Error", message="Passwords do not match !", master = app_sign, justify = "center", icon="cancel")
+            msg1 = CTkMessagebox(title="Signup Error", message="Passwords do not match !", master = app_sign, justify = "center", icon="cancel")
+            msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def sign_up_invoke_function():
     app.withdraw()
@@ -69,6 +78,7 @@ def login_page(): #creating cutstom tkinter window
     app.resizable(False, False)
     app.geometry("600x400")
     app.title('Login')
+    app.iconbitmap("assets\\icon.ico")
 
     img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
     l1=ctk.CTkLabel(master=app,image=img1)
@@ -97,6 +107,7 @@ def login_page(): #creating cutstom tkinter window
     button1 = ctk.CTkButton(master=frame, width=220, text="Login", command=lambda : login_button_function(entry1, entry2), corner_radius=6)
     button1.place(x=50, y=225)
 
+    app.protocol("WM_DELETE_WINDOW", close_wm)
     app.mainloop()
 
 def signup_page():
@@ -104,6 +115,7 @@ def signup_page():
     app_sign.resizable(False, False)
     app_sign.geometry("600x400")
     app_sign.title('Signup')
+    app_sign.after(250, lambda : app_sign.iconbitmap("assets\\icon.ico"))
     app_sign.grab_set()
     # print(app.state())
     # app.state("normal")
@@ -138,6 +150,7 @@ def signup_page():
     button1 = ctk.CTkButton(master=frame, width=220, text="Signup", command=lambda : signup_button_function(app, entry1, entry2, entry3), corner_radius=6)
     button1.place(x=50, y=270)
 
+    app_sign.protocol("WM_DELETE_WINDOW", close_wm)
     # app.mainloop()
 
 def book_button_function(app_book, adult_var, child_var, entry1, entry2):
@@ -150,22 +163,28 @@ def book_button_function(app_book, adult_var, child_var, entry1, entry2):
 
     if booked:
         conf = CTkMessagebox(title="Confirmation", message=f"Fare : Rs {fare}\nDo you want to continue ?", master = app_book, justify = "center", icon="question", option_1="yes", option_2="No")
+        conf.after(250, lambda : conf.iconbitmap("assets\\icon.ico"))
+        
         choice = conf.get()
 
         if (choice == "yes"):
             paid = book_ticket.ticket(tickets, fare)
 
             if paid:
-                CTkMessagebox(title="Ticket booked", message="Ticket booked successfully !", master = app_book, justify = "center",
+                msg1 = CTkMessagebox(title="Ticket booked", message="Ticket booked successfully !", master = app_book, justify = "center",
                     icon="check")
+                msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
+                
         else:
             paid = False
         
         if not paid:
-            CTkMessagebox(title="Failed", message="Payment failed !", master = app_book, justify = "center", icon="cancel")
+            msg1 = CTkMessagebox(title="Failed", message="Payment failed !", master = app_book, justify = "center", icon="cancel")
+            msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
     else:
-        CTkMessagebox(title="Booking Error", message="No stations found !", master = app_book, justify = "center", icon="cancel")
+        msg1 = CTkMessagebox(title="Booking Error", message="No stations found !", master = app_book, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def back_button(app_main, app_back):
     app_back.withdraw()
@@ -177,6 +196,7 @@ def book_page(app_main):
     app_book.resizable(False, False)
     app_book.geometry("600x400")
     app_book.title('Book ticket')
+    app_book.after(250, lambda : app_book.iconbitmap("assets\\icon.ico"))
     app_book.grab_set()
 
     img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -222,6 +242,8 @@ def book_page(app_main):
     button1 = ctk.CTkButton(master=frame, width=220, text="Book now", command=lambda : book_button_function(app_book, adult_var, child_var, entry1, entry2), corner_radius=6)
     button1.place(x=50, y=245)
 
+    app_book.protocol("WM_DELETE_WINDOW", close_wm)
+
 def book_page_invoke(app_main):
     app_main.withdraw()
     book_page(app_main)
@@ -241,6 +263,7 @@ def search_train_button(app_train, entry1, entry2):
         app_train_table.resizable(False, False)
         app_train_table.geometry("1000x563")
         app_train_table.title('Train time table')
+        app_train_table.after(250, lambda : app_train_table.iconbitmap("assets\\icon.ico"))
         app_train_table.grab_set()
 
         img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -268,10 +291,12 @@ def search_train_button(app_train, entry1, entry2):
         # print(table.winfo_width(), table.winfo_height())
 
     elif (len(data)==0):
-        CTkMessagebox(title="Error", message="No such stations present !", master = app_train, justify = "center", icon="cancel")
-    
+        msg1 = CTkMessagebox(title="Error", message="No such stations present !", master = app_train, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
+
     else:
-        CTkMessagebox(title="Not found", message="No trains available between the stations now !", master = app_train, justify = "center", icon="info")
+        msg1 = CTkMessagebox(title="Not found", message="No trains available between the stations now !", master = app_train, justify = "center", icon="info")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def train_page_invoke(app_main):
     app_main.withdraw()
@@ -282,6 +307,7 @@ def train_page(app_main):
     app_train.resizable(False, False)
     app_train.geometry("600x400")
     app_train.title('Search train')
+    app_train.after(250, lambda : app_train.iconbitmap("assets\\icon.ico"))
     app_train.grab_set()
 
     img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -311,6 +337,8 @@ def train_page(app_main):
     button1 = ctk.CTkButton(master=frame, width=220, text="Search", command=lambda : search_train_button(app_train, entry1, entry2), corner_radius=6)
     button1.place(x=50, y=210)
 
+    app_train.protocol("WM_DELETE_WINDOW", close_wm)
+
 def station_page_invoke(app_main):
     app_main.withdraw()
     station_page(app_main)
@@ -329,7 +357,8 @@ def search_station_button(app_station, entry1):
         app_station_table = ctk.CTkToplevel(app)
         app_station_table.resizable(False, False)
         app_station_table.geometry("600x400")
-        app_station_table.title('Train time table')
+        app_station_table.title('Stations')
+        app_station_table.after(250, lambda : app_station_table.iconbitmap("assets\\icon.ico"))
         app_station_table.grab_set()
 
         img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -358,7 +387,8 @@ def search_station_button(app_station, entry1):
         # print(table.winfo_width(), table.winfo_height())
 
     else:
-        CTkMessagebox(title="Error", message="No such stations present !", master = app_station, justify = "center", icon="cancel")
+        msg1 = CTkMessagebox(title="Error", message="No such stations present !", master = app_station, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
     
     
 def station_page(app_main):
@@ -366,6 +396,7 @@ def station_page(app_main):
     app_station.resizable(False, False)
     app_station.geometry("450x338")
     app_station.title('Search station')
+    app_station.after(250, lambda : app_station.iconbitmap("assets\\icon.ico"))
     app_station.grab_set()
 
     img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -392,6 +423,8 @@ def station_page(app_main):
     button1 = ctk.CTkButton(master=frame, width=220, text="Search", command=lambda : search_station_button(app_station, entry1), corner_radius=6)
     button1.place(x=50, y=155)
 
+    app_station.protocol("WM_DELETE_WINDOW", close_wm)
+
 def show_page(app_main):
     # print(f"{src}-->{dest}")
     book_ticket.refresh()
@@ -405,7 +438,8 @@ def show_page(app_main):
         app_ticket = ctk.CTkToplevel(app)
         app_ticket.resizable(False, False)
         app_ticket.geometry("800x500")
-        app_ticket.title('Train time table')
+        app_ticket.title('Show ticket')
+        app_ticket.after(250, lambda : app_ticket.iconbitmap("assets\\icon.ico"))
         app_ticket.grab_set()
 
         img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -434,7 +468,8 @@ def show_page(app_main):
         # print(table.winfo_width(), table.winfo_height())
 
     else:
-        CTkMessagebox(title="Error", message="No tickets booked yet !", master = app_main, justify = "center", icon="cancel")
+        msg1 = CTkMessagebox(title="Error", message="No tickets booked yet !", master = app_main, justify = "center", icon="cancel")
+        msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def wallet_page_invoke(app_main):
     app_main.withdraw()
@@ -451,7 +486,8 @@ class wallet_page:
         app_wallet = ctk.CTkToplevel(app)
         app_wallet.resizable(False, False)
         app_wallet.geometry("600x400")
-        app_wallet.title('Search train')
+        app_wallet.title('Wallet')
+        app_wallet.after(250, lambda : app_wallet.iconbitmap("assets\\icon.ico"))
         app_wallet.grab_set()
 
         img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -481,8 +517,12 @@ class wallet_page:
         l3.bind("<Leave>", command = lambda event : (l3.configure(text="Rs XX, XXX"),
                                                             button1.lift()))
 
+        app_wallet.protocol("WM_DELETE_WINDOW", close_wm)
+
     def add_money_button(self, app_wallet):
         credit = ctk.CTkInputDialog(text="Enter amount : ", title="Add money")
+        credit.after(250, lambda : credit.iconbitmap("assets\\icon.ico"))
+        # credit.iconbitmap("assets\\icon.ico")
         amount = credit.get_input()
 
         try: 
@@ -490,20 +530,25 @@ class wallet_page:
 
             if added:
                 self.bal += int(amount)
-                CTkMessagebox(title="Transaction successful", message=f"Rs {amount} added !", master = app_wallet, justify = "center",
+                msg1 = CTkMessagebox(title="Transaction successful", message=f"Rs {amount} added !", master = app_wallet, justify = "center",
                     icon="check")
+                msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
+                
             else:
-                CTkMessagebox(title="Transaction failed", message=f"Minimum deposit : Rs 100", master = app_wallet, justify = "center",
+                msg1 = CTkMessagebox(title="Transaction failed", message=f"Minimum deposit : Rs 100", master = app_wallet, justify = "center",
                     icon="info")
+                msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
         except:
-            CTkMessagebox(title="Error", message="Enter a valid number !", master = app_wallet, justify = "center", icon="cancel")
+            msg1 = CTkMessagebox(title="Error", message="Enter a valid number !", master = app_wallet, justify = "center", icon="cancel")
+            msg1.after(250, lambda : msg1.iconbitmap("assets\\icon.ico"))
 
 def main_page():
     app_main = ctk.CTkToplevel(app)  #creating cutstom tkinter window
     app_main.resizable(False, False)
     app_main.geometry("600x400")
     app_main.title('E-Ticket')
+    app_main.after(250, lambda : app_main.iconbitmap("assets\\icon.ico"))
     app_main.grab_set()
 
     img1=ImageTk.PhotoImage(Image.open("./assets/pattern.jpg"))
@@ -598,6 +643,8 @@ def main_page():
                                                         l8.lift()))
     button6.bind("<Leave>", command = lambda event : (l8.configure(text=""),
                                                         button6.lift()))
+
+    app_main.protocol("WM_DELETE_WINDOW", close_wm)
 
 if __name__ == "__main__":
     login_page()
