@@ -3,7 +3,6 @@ import pickle
 import os
 from datetime import datetime, timedelta
 from wallet import wallet
-from prettytable import PrettyTable
 
 def refresh():
     if ("ticket_data" in os.listdir("data")):
